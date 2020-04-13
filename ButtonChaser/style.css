@@ -29,8 +29,8 @@ body {
 
 #dot {
   position: absolute;
-  top: 25px;
-  left: 25px;
+  top: 25px; /* Temporary value, which will be changed by JS*/
+  left: 25px; /* Temporary value, which will be changed by JS*/
   width: 64px;
   height: 64px;
   background-color: darkblue;
