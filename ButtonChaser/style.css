@@ -1,0 +1,38 @@
+body {
+  font-family: "Nunito", sans-serif;
+  font-size: 14pt;
+  color: darkblue;
+  font-weight: bold;
+}
+
+#scoreLabel {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  height: 25px;
+}
+
+#pageTitle {
+  font-size: 24pt;
+  position: absolute;
+  top: 35px;
+  left: 10px;
+  height: 25px;
+}
+
+#gameArea {
+  position: absolute;
+  top: 75px;
+  left: 10px;
+  border: 1px solid darkblue;
+}
+
+#dot {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  width: 64px;
+  height: 64px;
+  background-color: darkblue;
+  border: none;
+}
