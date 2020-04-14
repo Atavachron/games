@@ -12,6 +12,7 @@ let pWidth,
   ballTop = 8;
 
 window.addEventListener("load", init);
+window.addEventListener("resize", init);
 
 function init() {
   const playingArea = get("#playingArea");
@@ -22,8 +23,8 @@ function init() {
 }
 
 function layoutPage() {
-  pWidth = innerWidth - 22;
-  pHeight = innerHeight - 22;
+  pWidth = innerWidth - 20;
+  pHeight = innerHeight - 20;
   playingArea.style.width = `${pWidth}px`;
   playingArea.style.height = `${pHeight}px`;
 }
