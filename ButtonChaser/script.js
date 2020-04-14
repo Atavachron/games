@@ -39,7 +39,7 @@ function moveDot() {
   dot.style.left = `${x}px`;
   dot.style.top = `${y}px`;
 
-  if (iterations < 10) {
+  if (iterations < 30) {
     timer = setTimeout(moveDot, 1000);
   } else {
     scoreLabel.innerHTML += `  Game Over!`;
