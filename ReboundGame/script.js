@@ -21,6 +21,7 @@ function init() {
   const score = get("#score");
   document.addEventListener("keydown", keyListener);
   layoutPage();
+  timer = requestAnimationFrame(start);
 }
 
 function layoutPage() {
@@ -44,4 +45,103 @@ function keyListener(e) {
     if (paddleLeft > pWidth - 64) paddleLeft = pWidth - 64;
   }
   paddle.style.left = `${paddleLeft}px`;
+}
+
+function start() {
+  render();
+  detectCollisions();
+  difficulty();
+  if (ballTop < pHeight - 36) {
+    timer = requestAnimationFrame(start);
+  } else {
+    gameOver();
+  }
+}
+
+function render() {
+  moveBall();
+  updateScore();
+}
+
+function moveBall() {
+  ballTop += dy;
+  ballLeft += dx;
+  ball.style.top = `${ballTop}px`;
+  ball.style.left = `${ballLeft}px`;
+}
+
+function updateScore() {
+  currentScore += 5;
+  score.innerHTML = `Score: ${currentScore}`;
+}
+
+function detectCollisions() {
+  if (collisionX()) {
+    dx *= -1;
+  }
+
+  if (collisionY()) {
+    dy *= -1;
+  }
+}
+
+function collisionX() {
+  if (ballLeft < 4 || ballLeft > pWidth - 20) {
+    return true;
+  }
+  return false;
+}
+
+function collisionY() {
+  if (ballTop < 4) {
+    return true;
+  }
+  if (ballTop > pHeight - 64) {
+    if (ballLeft >= paddleLeft && ballLeft <= paddleLeft + 64) {
+      return true;
+    }
+  }
+  return false;
+}
+
+//If we want an increase in speed and change direction
+
+function difficulty() {
+  if (currentScore % 1000 === 0) {
+    if (dy > 0) {
+      dy += 2;
+    } else {
+      dy -= 2;
+    }
+  }
+}
+
+/*
+//If we want the ball not to change direction with the speed increase
+
+function difficulty() {
+  if (currentScore % 1000 === 0) {
+    if (dy > 0) {
+      dy += 2;
+      if (dx > 0) {
+        dx += 2;
+      } else {
+        dx -= 2;
+      }
+    } else {
+      dy -= 2;
+      if (dx > 0) {
+        dx += 2;
+      } else {
+        dx -= 2;
+      }
+    }
+  }
+}
+*/
+
+function gameOver() {
+  cancelAnimationFrame(timer);
+  score.innerHTML += "   Game Over";
+  score.style.backgroundColor = "rgb(128,0,0)";
 }
