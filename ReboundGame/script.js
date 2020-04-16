@@ -1,5 +1,15 @@
 const get = (elem) => document.querySelector(elem);
 
+let playingArea,
+  ball,
+  paddle,
+  score,
+  gear,
+  controls,
+  newButton,
+  difficultySelect,
+  doneButton;
+
 let pWidth,
   pHeight,
   dx = 2,
@@ -16,10 +26,15 @@ window.addEventListener("load", init);
 window.addEventListener("resize", init);
 
 function init() {
-  const playingArea = get("#playingArea");
-  const ball = get("#ball");
-  const paddle = get("#paddle");
-  const score = get("#score");
+  playingArea = get("#playingArea");
+  ball = get("#ball");
+  paddle = get("#paddle");
+  score = get("#score");
+  gear = get("#gear");
+  controls = get("#controls");
+  newButton = get("#new");
+  difficultySelect = get("#difficulty");
+  doneButton = get("#done");
   layoutPage();
 
   document.addEventListener("keydown", keyListener);
@@ -29,6 +44,13 @@ function init() {
   playingArea.addEventListener("touchstart", mouseDown);
   playingArea.addEventListener("touchmove", mouseMove);
   playingArea.addEventListener("touchend", mouseUp);
+
+  gear.addEventListener("click", showSettings);
+  newButton.addEventListener("click", newGame);
+  doneButton.addEventListener("click", hideSettings);
+  difficultySelect.addEventListener("change", function () {
+    setDifficulty(difficultySelect.selectedIndex);
+  });
 
   timer = requestAnimationFrame(start);
 }
@@ -194,4 +216,43 @@ function mouseMove(e) {
     if (paddleLeft > pWidth - 64) paddleLeft = pWidth - 64;
     paddle.style.left = `${paddleLeft}px`;
   }
+}
+
+function showSettings() {
+  controls.style.display = "block";
+  cancelAnimationFrame(timer);
+}
+
+function hideSettings() {
+  controls.style.display = "none";
+  timer = requestAnimationFrame(start);
+}
+
+function setDifficulty(diff) {
+  switch (diff) {
+    case 0:
+      dy = 2;
+      pdx = 48;
+      break;
+    case 1:
+      dy = 4;
+      pdx = 32;
+      break;
+    case 2:
+      dy = 6;
+      pdx = 16;
+      break;
+    default:
+      dy = 2;
+      pdx = 48;
+  }
+}
+
+function newGame() {
+  ballTop = 8;
+  currentScore = 0;
+  dx = 2;
+  setDifficulty(difficultySelect.selectedIndex);
+  score.style.backgroundColor = "green";
+  hideSettings();
 }
