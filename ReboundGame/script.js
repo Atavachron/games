@@ -106,7 +106,30 @@ function collisionY() {
     return true;
   }
   if (ballTop > pHeight - 64) {
-    if (ballLeft >= paddleLeft && ballLeft <= paddleLeft + 64) {
+    // if (ballLeft >= paddleLeft && ballLeft <= paddleLeft + 64) {
+    //   return true;
+    // }
+
+    if (ballLeft >= paddleLeft + 16 && ballLeft <= paddleLeft + 48) {
+      if (dx < 0) {
+        dx = -2;
+      } else {
+        dx = 2;
+      }
+      return true;
+    } else if (ballLeft >= paddleLeft && ballLeft < paddleLeft + 16) {
+      if (dx < 0) {
+        dx = -8;
+      } else {
+        dx = 8;
+      }
+      return true;
+    } else if (ballLeft >= paddleLeft + 48 && ballLeft < paddleLeft + 64) {
+      if (dx < 0) {
+        dx = -8;
+      } else {
+        dx = 8;
+      }
       return true;
     }
   }
