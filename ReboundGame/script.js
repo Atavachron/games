@@ -9,7 +9,8 @@ let pWidth,
   timer,
   paddleLeft = 228,
   ballLeft = 100,
-  ballTop = 8;
+  ballTop = 8,
+  drag = false;
 
 window.addEventListener("load", init);
 window.addEventListener("resize", init);
@@ -19,8 +20,16 @@ function init() {
   const ball = get("#ball");
   const paddle = get("#paddle");
   const score = get("#score");
-  document.addEventListener("keydown", keyListener);
   layoutPage();
+
+  document.addEventListener("keydown", keyListener);
+  playingArea.addEventListener("mousedown", mouseDown);
+  playingArea.addEventListener("mousemove", mouseMove);
+  playingArea.addEventListener("mouseup", mouseUp);
+  playingArea.addEventListener("touchstart", mouseDown);
+  playingArea.addEventListener("touchmove", mouseMove);
+  playingArea.addEventListener("touchend", mouseUp);
+
   timer = requestAnimationFrame(start);
 }
 
@@ -144,4 +153,22 @@ function gameOver() {
   cancelAnimationFrame(timer);
   score.innerHTML += "   Game Over";
   score.style.backgroundColor = "rgb(128,0,0)";
+}
+
+function mouseDown(e) {
+  drag = true;
+}
+
+function mouseUp(e) {
+  drag = false;
+}
+
+function mouseMove(e) {
+  if (drag) {
+    e.preventDefault();
+    paddleLeft = e.clientX - 32 || e.targetTouches[0].pageX - 32;
+    if (paddleLeft < 0) paddleLeft = 0;
+    if (paddleLeft > pWidth - 64) paddleLeft = pWidth - 64;
+    paddle.style.left = `${paddleLeft}px`;
+  }
 }
