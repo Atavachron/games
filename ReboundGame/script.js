@@ -35,6 +35,7 @@ function init() {
   newButton = get("#new");
   difficultySelect = get("#difficulty");
   doneButton = get("#done");
+
   layoutPage();
 
   document.addEventListener("keydown", keyListener);
@@ -128,10 +129,6 @@ function collisionY() {
     return true;
   }
   if (ballTop > pHeight - 64) {
-    // if (ballLeft >= paddleLeft && ballLeft <= paddleLeft + 64) {
-    //   return true;
-    // }
-
     if (ballLeft >= paddleLeft + 16 && ballLeft <= paddleLeft + 48) {
       if (dx < 0) {
         dx = -2;
