@@ -32,6 +32,7 @@ button {
   outline: none;
   color: white;
   transition: all 0.1s;
+  align-self: center;
 }
 
 .roll {
@@ -52,6 +53,8 @@ button:active {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   width: 500px;
   margin: 0 auto;
   background: white;
