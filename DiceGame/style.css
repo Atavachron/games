@@ -1,0 +1,77 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: Nunito, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(135deg, #a8e6cf, #dcedc1);
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+button {
+  font-family: inherit;
+  margin-top: 30px;
+  padding: 10px 25px;
+  font-size: 1.5em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  color: white;
+  transition: all 0.1s;
+}
+
+.roll {
+  background-color: #ff8b94;
+}
+
+.reset {
+  background-color: #ffaaa5;
+  display: none;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button:active {
+  transform: scale(1);
+}
+
+.container {
+  width: 500px;
+  margin: 0 auto;
+  background: white;
+  padding: 50px;
+  border-radius: 5px;
+  box-shadow: -2px 6px 18px 3px rgba(0, 0, 0, 0.75);
+}
+
+.players {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.dice {
+  font-size: 4rem;
+  background: #ffd3b6;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.active {
+  box-shadow: -2px 6px 18px 3px rgba(0, 0, 0, 0.75);
+}
