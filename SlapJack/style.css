@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: darkgreen;
+}
+
+#opponent-face {
+  font-size: 15vh;
+}
+
+.card {
+  height: 20vh;
+  width: 15vh;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.card-back {
+  background-image: radial-gradient(darkblue, lightblue);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.discard-pile {
+  margin: 5vh 0;
+}
+
+#opponent-deck {
+  margin-right: 35vw;
+}
+
+#player-deck {
+  margin-left: 35vw;
+}
+
+.card-front {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  font-size: 3vh;
+}
+
+.right-side-up {
+  position: absolute;
+  text-align: center;
+  top: 0.4vh;
+  left: 0.4vh;
+}
+
+.flipped {
+  position: absolute;
+  text-align: center;
+  bottom: 0.4vh;
+  right: 0.4vh;
+  transform: rotate(180deg);
+}
+
+.card-art {
+  display: flex;
+  flex-flow: row wrap;
+}
