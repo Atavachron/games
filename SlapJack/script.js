@@ -88,7 +88,7 @@ function shuffle(deck) {
 // }
 
 //Shuffle the array of cards
-discardCards = suffle(discardCards);
+discardCards = shuffle(discardCards);
 
 //Divide the cards evenly between the player and the opponent and empty the discardCards array
 for (let i = discardCards.length - 1; i >= 0; i--) {
