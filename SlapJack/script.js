@@ -1,6 +1,6 @@
 const opponentCards = [];
 const playerCards = [];
-const discardCards = [];
+let discardCards = [];
 
 //Create the deck of cards, nested loop, creating four suits and 13 cards in each suit
 for (let i = 0; i < 4; i++) {
