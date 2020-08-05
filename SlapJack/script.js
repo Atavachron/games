@@ -69,7 +69,6 @@ function shuffle(deck) {
     //Replace the original card at the random index with the card in the temporary placeholder. The two cards have now 'changed places'
     deck[randomCardIndex] = temporaryCard;
   }
-
   return deck;
 }
 
@@ -87,3 +86,15 @@ function shuffle(deck) {
 //   }
 //   return deck;
 // }
+
+//Shuffle the array of cards
+discardCards = suffle(discardCards);
+
+//Divide the cards evenly between the player and the opponent and empty the discardCards array
+for (let i = discardCards.length - 1; i >= 0; i--) {
+  if (i % 2 === 0) {
+    playerCards.push(discardCards.pop());
+  } else {
+    opponentCards.push(discardCards.pop());
+  }
+}
