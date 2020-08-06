@@ -2,6 +2,11 @@ const opponentCards = [];
 const playerCards = [];
 let discardCards = [];
 
+const discardPile = document.getElementById('discard-pile');
+const opponentDeck = document.getElementById('opponent-deck');
+const playerDeck = document.getElementById('player-deck');
+const opponentFace = document.getElementById('opponent-face');
+
 //Create the deck of cards, nested loop, creating four suits and 13 cards in each suit
 for (let i = 0; i < 4; i++) {
   let suit;
@@ -98,3 +103,64 @@ for (let i = discardCards.length - 1; i >= 0; i--) {
     opponentCards.push(discardCards.pop());
   }
 }
+
+function playCard() {
+  //Remove the first card in the player deck and add it to the discard cards
+  discardCards.push(playerCards.shift());
+
+  //Create a variable holding the last card of the discard pile (current card)
+  const currentCard = discardCards[discardCards.length - 1];
+
+  //Create variables for the current value and the current suit (of the current card)
+  //These variables will be used to display styles in the UI
+  const currentValue = currentCard.substring(0, 1);
+  const currentSuit = currentCard.substring(1, 2);
+
+  //Get the two DOM elements containing the card number
+  const cardNumbers = document.querySelectorAll('.card-number');
+
+  //Get the element containing the card art
+  const cardArt = document.querySelector('.card-art');
+
+  //Create a variable to hold the suit symbol
+  let suitSymbol;
+
+  //Remove the red color from the discardPile
+
+  discardPile.classList.remove('red');
+  //Change the inner text of the elements holding the card values
+  cardNumbers.forEach(number => {
+    switch (currentSuit) {
+      case 'H':
+        number.innerText = currentValue + '\n♥';
+        suitSymbol = '♥';
+        discardPile.classList.add('red');
+        break;
+      case 'D':
+        number.innerText = currentValue + '\n♦';
+        suitSymbol = '♦';
+        discardPile.classList.add('red');
+        break;
+      case 'S':
+        number.innerText = currentValue + '\n♠';
+        suitSymbol = '♠';
+        break;
+      case 'C':
+        number.innerText = currentValue + '\n♣';
+        suitSymbol = '♣';
+        break;
+    }
+  });
+
+  //Add the suit symbols to the card, based on how many they are
+  for (let i = 0; i < currentValue; i++) {
+    //Create a div to hold each symbol
+    let suitSymbolContainer = document.createElement('div');
+    //Set the text content of the div to the suit symbol
+    suitSymbolContainer.textContent = suitSymbol;
+    //Append the new div to the card art container
+    cardArt.append(suitSymbolContainer);
+  }
+}
+
+playCard();

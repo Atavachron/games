@@ -62,5 +62,9 @@ body {
 
 .card-art {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
+}
+
+.red {
+  color: red;
 }
