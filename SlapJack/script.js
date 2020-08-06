@@ -113,8 +113,15 @@ function playCard() {
 
   //Create variables for the current value and the current suit (of the current card)
   //These variables will be used to display styles in the UI
-  const currentValue = currentCard.substring(0, 1);
-  const currentSuit = currentCard.substring(1, 2);
+  let currentValue = currentCard.substring(0, 1);
+  console.log(currentValue);
+
+  if (Number(currentValue)) {
+    currentValue = Number(currentValue) + 1;
+  }
+
+  console.log(currentValue);
+  let currentSuit = currentCard.substring(1, 2);
 
   //Get the two DOM elements containing the card number
   const cardNumbers = document.querySelectorAll('.card-number');
@@ -126,8 +133,8 @@ function playCard() {
   let suitSymbol;
 
   //Remove the red color from the discardPile
-
   discardPile.classList.remove('red');
+
   //Change the inner text of the elements holding the card values
   cardNumbers.forEach(number => {
     switch (currentSuit) {
@@ -152,14 +159,51 @@ function playCard() {
     }
   });
 
-  //Add the suit symbols to the card, based on how many they are
-  for (let i = 0; i < currentValue; i++) {
-    //Create a div to hold each symbol
+  //Remove the flex-flow property
+  cardArt.style.flexFlow = null;
+
+  if (Number(currentValue)) {
+    //Add the suit symbols to the card, based on how many they are
+    for (let i = 0; i < currentValue; i++) {
+      //Create a div to hold each symbol
+      let suitSymbolContainer = document.createElement('div');
+      //Set the text content of the div to the suit symbol
+      suitSymbolContainer.textContent = suitSymbol;
+      //Append the new div to the card art container
+      cardArt.append(suitSymbolContainer);
+    }
+
+    //Change the flex-flow property for cards with a value less than 4
+    if (currentValue < 4) {
+      cardArt.style.flexFlow = 'column wrap';
+    }
+  } else if (!Number(currentValue)) {
+    switch (currentValue) {
+      case 'J':
+        suitSymbol = '🤵';
+        break;
+
+      case 'Q':
+        suitSymbol = '👸';
+        break;
+      case 'K':
+        suitSymbol = '🤴';
+        break;
+    }
+
     let suitSymbolContainer = document.createElement('div');
-    //Set the text content of the div to the suit symbol
     suitSymbolContainer.textContent = suitSymbol;
-    //Append the new div to the card art container
+    suitSymbolContainer.style.fontSize = '6vh';
     cardArt.append(suitSymbolContainer);
+
+    if (currentValue !== 'A') {
+      cardArt.style.flexFlow = 'column wrap';
+      let flippedSuitSymbolContainer = document.createElement('div');
+      flippedSuitSymbolContainer.textContent = suitSymbol;
+      flippedSuitSymbolContainer.style.fontSize = '6vh';
+      flippedSuitSymbolContainer.style.transform = 'rotate(180deg)';
+      cardArt.append(flippedSuitSymbolContainer);
+    }
   }
 }
 
