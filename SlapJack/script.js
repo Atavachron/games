@@ -1,5 +1,5 @@
-const opponentCards = [];
-const playerCards = [];
+let opponentCards = [];
+let playerCards = [];
 let discardCards = [];
 
 const discardPile = document.getElementById('discard-pile');
@@ -107,6 +107,7 @@ for (let i = discardCards.length - 1; i >= 0; i--) {
 function playCard(event) {
   //Create a variable holding the id of the deck clicked
   const target = event.target.id;
+  discardPile.style.visibility = 'visible';
   //Check which deck was clicked
   if (target === 'player-deck') {
     //Remove the first card from the playerCards array and push it to the discardCards
@@ -240,6 +241,7 @@ function opponentAI(lastPlayer) {
       discardCards.length > 0 &&
       discardCards[discardCards.length - 1].includes('J')
     ) {
+      slap();
       console.log('Slap');
       //Check if the last player was the player-deck
     } else if (lastPlayer === 'player-deck') {
@@ -255,4 +257,59 @@ function opponentAI(lastPlayer) {
   }, reactionTime);
 }
 
+function slap(event) {
+  //Create a variable that will represent the current player who has slapped
+  let currentPlayer;
+  //Determine if the player or the AI has slapped
+  //If there is an event at all, then the player has slapped
+  if (event !== undefined) {
+    currentPlayer = 'player';
+    //If there is no event element then the opponent has slapped
+  } else {
+    currentPlayer = 'opponent';
+
+    //If the discard cards array is empty the game is over, so make the opponent sad and end
+    if (discardCards.length === 0) {
+      changeOpponentFace('sad');
+      return;
+    }
+  }
+  if (
+    discardCards.length > 0 &&
+    discardCards[discardCards.length - 1].includes('J')
+  ) {
+    discardPile.style.visibility = 'hidden';
+    if (currentPlayer === 'player') {
+      //Add the shuffled discardCards to the playerCards
+      playerCards = playerCards.concat(shuffle(discardCards));
+      changeOpponentFace('sad');
+      //Clear the timeout if the player has slapped, otherwise the opponent will still slap
+      window.clearTimeout(reaction);
+    } else if (currentPlayer === 'opponent') {
+      //Add the shuffled discardCards to the opponentCards
+      opponentCards = opponentCards.concat(shuffle(discardCards));
+      changeOpponentFace('happy');
+      opponentAI('player-deck');
+    }
+    //Empty the discard cards array after the slap
+    discardsCards = [];
+  }
+}
+
+let expression;
+function changeOpponentFace(mood) {
+  if (mood === 'sad') {
+    opponentFace.textContent = '😣';
+  } else if (mood === 'happy') {
+    opponentFace.textContent = '😁';
+  }
+
+  const expressionTime = Math.floor(Math.random() * (1000 - 500) + 500);
+  clearTimeout(expression);
+  expression = setTimeout(function () {
+    opponentFace.textContent = '🙂';
+  }, expressionTime);
+}
+
 playerDeck.addEventListener('click', playCard);
+discardPile.addEventListener('click', slap);

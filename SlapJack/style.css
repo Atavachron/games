@@ -25,8 +25,13 @@ body {
   align-items: center;
 }
 
-.discard-pile {
+#discard-pile {
   margin: 5vh 0;
+  visibility: hidden;
+}
+
+#discard-pile > * {
+  pointer-events: none;
 }
 
 #opponent-deck > * {
