@@ -29,12 +29,14 @@ body {
   margin: 5vh 0;
 }
 
-#opponent-deck {
+#opponent-deck > * {
   margin-right: 35vw;
+  pointer-events: none;
 }
 
-#player-deck {
+#player-deck > * {
   margin-left: 35vw;
+  pointer-events: none;
 }
 
 .card-front {

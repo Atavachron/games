@@ -104,9 +104,16 @@ for (let i = discardCards.length - 1; i >= 0; i--) {
   }
 }
 
-function playCard() {
-  //Remove the first card in the player deck and add it to the discard cards
-  discardCards.push(playerCards.shift());
+function playCard(event) {
+  //Create a variable holding the id of the deck clicked
+  const target = event.target.id;
+  //Check which deck was clicked
+  if (target === 'player-deck') {
+    //Remove the first card from the playerCards array and push it to the discardCards
+    discardCards.push(playerCards.shift());
+  } else if (target === 'opponent-deck') {
+    discardCards.push(opponentCards.shift());
+  }
 
   //Create a variable holding the last card of the discard pile (current card)
   const currentCard = discardCards[discardCards.length - 1];
@@ -114,13 +121,11 @@ function playCard() {
   //Create variables for the current value and the current suit (of the current card)
   //These variables will be used to display styles in the UI
   let currentValue = currentCard.substring(0, 1);
-  console.log(currentValue);
 
   if (Number(currentValue)) {
     currentValue = Number(currentValue) + 1;
   }
 
-  console.log(currentValue);
   let currentSuit = currentCard.substring(1, 2);
 
   //Get the two DOM elements containing the card number
@@ -159,6 +164,10 @@ function playCard() {
     }
   });
 
+  //If the displayed card div has any children (from the previous card) remove them
+  while (cardArt.children[0]) {
+    cardArt.children[0].remove();
+  }
   //Remove the flex-flow property
   cardArt.style.flexFlow = null;
 
@@ -177,6 +186,7 @@ function playCard() {
     if (currentValue < 4) {
       cardArt.style.flexFlow = 'column wrap';
     }
+    //Check if the currentValue is not a number
   } else if (!Number(currentValue)) {
     switch (currentValue) {
       case 'J':
@@ -191,20 +201,58 @@ function playCard() {
         break;
     }
 
+    //create a new div that will hold the symbol
     let suitSymbolContainer = document.createElement('div');
+    //Add the symbol to the div
     suitSymbolContainer.textContent = suitSymbol;
+    //Increase the font-size of the symbol
     suitSymbolContainer.style.fontSize = '6vh';
+    //Append the new div to the card art div
     cardArt.append(suitSymbolContainer);
 
+    //Check if the card is not an ace as it does not have an image
     if (currentValue !== 'A') {
       cardArt.style.flexFlow = 'column wrap';
       let flippedSuitSymbolContainer = document.createElement('div');
       flippedSuitSymbolContainer.textContent = suitSymbol;
       flippedSuitSymbolContainer.style.fontSize = '6vh';
+      //Rotate the image
       flippedSuitSymbolContainer.style.transform = 'rotate(180deg)';
       cardArt.append(flippedSuitSymbolContainer);
     }
   }
+  //Call the opponent AI function that will analyze the card that has been played
+  opponentAI(target);
 }
 
-playCard();
+let reaction;
+
+//Create an opponentAI function that will accept lastPlayer as parameter
+function opponentAI(lastPlayer) {
+  //Get a random number for the AI reaction time
+  const reactionTime = Math.floor(Math.random() * (1400 - 900) + 900);
+  //Clear a previous timeout
+  clearTimeout(reaction);
+  //Set a timeout for the AI reaction
+  reaction = setTimeout(function () {
+    //Check if the discardCards deck has any cards and if the top card is a Jack
+    if (
+      discardCards.length > 0 &&
+      discardCards[discardCards.length - 1].includes('J')
+    ) {
+      console.log('Slap');
+      //Check if the last player was the player-deck
+    } else if (lastPlayer === 'player-deck') {
+      //create an event object
+      let event = new Object();
+      //create a target object
+      event.target = new Object();
+      //add the opponent-deck as an id to the new event.target object
+      event.target.id = 'opponent-deck';
+      //Pass the new event object to the playCard function
+      playCard(event);
+    }
+  }, reactionTime);
+}
+
+playerDeck.addEventListener('click', playCard);
