@@ -6,6 +6,7 @@ const discardPile = document.getElementById('discard-pile');
 const opponentDeck = document.getElementById('opponent-deck');
 const playerDeck = document.getElementById('player-deck');
 const opponentFace = document.getElementById('opponent-face');
+const playAgainBtn = document.querySelector('#play-again-control button');
 
 //Create the deck of cards, nested loop, creating four suits and 13 cards in each suit
 for (let i = 0; i < 4; i++) {
@@ -222,6 +223,8 @@ function playCard(event) {
       cardArt.append(flippedSuitSymbolContainer);
     }
   }
+  //Check if game is won or lost
+  getCurrentCards();
   //Call the opponent AI function that will analyze the card that has been played
   opponentAI(target);
 }
@@ -284,15 +287,18 @@ function slap(event) {
       playerCards = playerCards.concat(shuffle(discardCards));
       changeOpponentFace('sad');
       //Clear the timeout if the player has slapped, otherwise the opponent will still slap
-      window.clearTimeout(reaction);
+      clearTimeout(reaction);
     } else if (currentPlayer === 'opponent') {
       //Add the shuffled discardCards to the opponentCards
       opponentCards = opponentCards.concat(shuffle(discardCards));
       changeOpponentFace('happy');
       opponentAI('player-deck');
     }
+
     //Empty the discard cards array after the slap
     discardsCards = [];
+
+    getCurrentCards();
   }
 }
 
@@ -311,5 +317,24 @@ function changeOpponentFace(mood) {
   }, expressionTime);
 }
 
+function getCurrentCards() {
+  if (playerCards.length === 0) {
+    playerDeck.style.visibility = 'hidden';
+    playerDeck.removeEventListener(`click`, playCard);
+    clearTimeout(reaction);
+    document.getElementById('win-status').textContent = 'You lose';
+    document.getElementById('play-again-wrapper').style.display = 'flex';
+  } else if (opponentCards.length === 0) {
+    opponentDeck.style.visibility = 'hidden';
+    clearTimeout(reaction);
+    opponentFace.textContent = `😣`;
+    document.getElementById('win-status').textContent = 'You win';
+    document.getElementById('play-again-wrapper').style.display = 'flex';
+  }
+}
+
 playerDeck.addEventListener('click', playCard);
 discardPile.addEventListener('click', slap);
+playAgainBtn.addEventListener('click', function () {
+  location.reload();
+});
