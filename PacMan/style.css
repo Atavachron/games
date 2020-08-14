@@ -14,3 +14,24 @@ body {
   width: 15px;
   height: 15px;
 }
+
+.dot {
+  background-color: green;
+  border: 5px solid white;
+  box-sizing: border-box;
+}
+
+.wall {
+  background-color: blue;
+}
+
+.powerup {
+  background-color: green;
+  border-radius: 7.5px; 
+}
+
+.pacman {
+  background-color: orange;
+  border-radius: 7.5px;
+}
+
