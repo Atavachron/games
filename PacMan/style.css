@@ -8,6 +8,7 @@ body {
   width: 420px;
   height: 420px;
   border: 2px solid black;
+  flex-wrap: wrap;
 }
 
 .grid div {
@@ -34,4 +35,6 @@ body {
   background-color: orange;
   border-radius: 7.5px;
 }
+
+
 

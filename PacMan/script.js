@@ -1,6 +1,7 @@
 const grid = document.querySelector('.grid');
 const score = document.querySelector('#score');
 const width = 28;
+let squares = []
 
 //0 - dots
 //1 - wall
@@ -39,3 +40,23 @@ const gameLayout = [
   1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 ];
+
+function createBoard() {
+  gameLayout.forEach((num, index) => {
+    const square = document.createElement('div');
+    grid.appendChild(square);
+    squares = [...squares, square];
+
+    if (num === 0) {
+      squares[index].classList.add('dot');
+    } else if (num === 1) {
+      squares[index].classList.add('wall');
+    } else if (num === 2) {
+      squares[index].classList.add('lair')
+    } else if (num === 3) {
+      squares[index].classList.add('powerup')
+    }
+  })
+}
+
+createBoard()
