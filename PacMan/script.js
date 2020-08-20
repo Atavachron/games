@@ -73,22 +73,38 @@ function controlPacman(event) {
     case "Down": // IE/Edge specific value
     case "ArrowDown":
       // Do something for "down arrow" key press.
-      if (pacmanCurrentIndex + width < width * width) pacmanCurrentIndex += width;
+      if (
+        !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
+        pacmanCurrentIndex + width < width * width
+      )
+        pacmanCurrentIndex += width;
       break;
     case "Up": // IE/Edge specific value
     case "ArrowUp":
       // Do something for "up arrow" key press.
-      if (pacmanCurrentIndex - width >= 0) pacmanCurrentIndex -= width;
+      if (
+        !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
+        pacmanCurrentIndex - width >= 0
+      )
+        pacmanCurrentIndex -= width;
       break;
     case "Left": // IE/Edge specific value
     case "ArrowLeft":
       // Do something for "left arrow" key press.
-      if (pacmanCurrentIndex % width !== 0) pacmanCurrentIndex -= 1;
+      if (
+        !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
+        pacmanCurrentIndex % width !== 0
+      )
+        pacmanCurrentIndex -= 1;
       break;
     case "Right": // IE/Edge specific value
     case "ArrowRight":
       // Do something for "right arrow" key press.
-      if (pacmanCurrentIndex % width < width - 1) pacmanCurrentIndex += 1;
+      if (
+        !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
+        pacmanCurrentIndex % width < width - 1
+      )
+        pacmanCurrentIndex += 1;
       break;
   }
   //Add the class of pacman to the new location
