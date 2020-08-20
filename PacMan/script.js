@@ -75,6 +75,7 @@ function controlPacman(event) {
       // Do something for "down arrow" key press.
       if (
         !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
+        !squares[pacmanCurrentIndex + width].classList.contains('lair') &&
         pacmanCurrentIndex + width < width * width
       )
         pacmanCurrentIndex += width;
@@ -96,6 +97,7 @@ function controlPacman(event) {
         pacmanCurrentIndex % width !== 0
       )
         pacmanCurrentIndex -= 1;
+      if (pacmanCurrentIndex === 364) pacmanCurrentIndex = 391;
       break;
     case "Right": // IE/Edge specific value
     case "ArrowRight":
@@ -105,6 +107,7 @@ function controlPacman(event) {
         pacmanCurrentIndex % width < width - 1
       )
         pacmanCurrentIndex += 1;
+      if (pacmanCurrentIndex === 391) pacmanCurrentIndex = 364;
       break;
   }
   //Add the class of pacman to the new location
