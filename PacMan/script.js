@@ -67,28 +67,32 @@ let pacmanCurrentIndex = 490;
 squares[pacmanCurrentIndex].classList.add('pacman');
 
 function controlPacman(event) {
+  //Remove the class of Pacman from the square we move from
+  squares[pacmanCurrentIndex].classList.remove('pacman');
   switch (event.key) {
     case "Down": // IE/Edge specific value
     case "ArrowDown":
       // Do something for "down arrow" key press.
-      console.log("down")
+      if (pacmanCurrentIndex + width < width * width) pacmanCurrentIndex += width;
       break;
     case "Up": // IE/Edge specific value
     case "ArrowUp":
       // Do something for "up arrow" key press.
-      console.log("up");
+      if (pacmanCurrentIndex - width >= 0) pacmanCurrentIndex -= width;
       break;
     case "Left": // IE/Edge specific value
     case "ArrowLeft":
       // Do something for "left arrow" key press.
-      console.log("left");
+      if (pacmanCurrentIndex % width !== 0) pacmanCurrentIndex -= 1;
       break;
     case "Right": // IE/Edge specific value
     case "ArrowRight":
       // Do something for "right arrow" key press.
-      console.log("right")
+      if (pacmanCurrentIndex % width < width - 1) pacmanCurrentIndex += 1;
       break;
   }
+  //Add the class of pacman to the new location
+  squares[pacmanCurrentIndex].classList.add('pacman')
 }
 
 document.addEventListener('keyup', controlPacman);
