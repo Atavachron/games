@@ -1,7 +1,8 @@
 const grid = document.querySelector('.grid');
-const score = document.querySelector('#score');
+const scoreDisplay = document.querySelector('#score');
 const width = 28;
 let squares = []
+let score = 0;
 
 //0 - dots
 //1 - wall
@@ -112,6 +113,19 @@ function controlPacman(event) {
   }
   //Add the class of pacman to the new location
   squares[pacmanCurrentIndex].classList.add('pacman')
+  eatDot();
 }
 
 document.addEventListener('keyup', controlPacman);
+
+function eatDot() {
+  if (squares[pacmanCurrentIndex].classList.contains('dot')) {
+    //Increase score by one
+    score++;
+    //Add the score to the display
+    scoreDisplay.innerText = score;
+    //Remove the dot class from the current square
+    squares[pacmanCurrentIndex].classList.remove('dot');
+
+  }
+}
