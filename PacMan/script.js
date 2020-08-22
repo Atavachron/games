@@ -129,3 +129,21 @@ function eatDot() {
 
   }
 }
+
+//Create a class of Ghost with class name, starting index and speed in the constructor
+class Ghost {
+  constructor(className, startIndex, speed) {
+    this.className = className;
+    this.startIndex = startIndex;
+    this.speed = speed;
+  }
+}
+
+const ghosts = [
+  new Ghost('ghost1', 348, 260),
+  new Ghost('ghost2', 376, 405),
+  new Ghost('ghost3', 351, 310),
+  new Ghost('ghost4', 379, 495),
+]
+
+ghosts.forEach(ghost => squares[ghost.startIndex].classList.add(ghost.className));

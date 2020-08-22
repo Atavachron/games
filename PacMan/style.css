@@ -37,5 +37,22 @@ body {
   border: none;
 }
 
+.ghost1, .ghost2, .ghost3, .ghost4 {
+  border: none;
+}
 
+.ghost1 {
+  background-color: red;
+}
 
+.ghost2 {
+  background-color: pink
+}
+
+.ghost3 {
+  background-color: purple;
+}
+
+.ghost4 {
+  background-color: chocolate
+}
