@@ -114,6 +114,7 @@ function controlPacman(event) {
   //Add the class of pacman to the new location
   squares[pacmanCurrentIndex].classList.add('pacman')
   eatDot();
+  eatPowerPellet();
 }
 
 document.addEventListener('keyup', controlPacman);
@@ -129,6 +130,24 @@ function eatDot() {
 
   }
 }
+
+function eatPowerPellet() {
+  if (squares[pacmanCurrentIndex].classList.contains('powerup')) {
+    //Increase score by 10 pointss
+    score += 10;
+
+    //Set each ghost to scared
+    ghosts.forEach(ghost => ghost.isScared = true);
+
+    //Unscare the ghosts after 10 seconds
+    setTimeout(unscareGhosts, 10000)
+  }
+}
+
+function unscareGhosts() {
+  ghosts.forEach(ghost => ghost.isScared = false);
+}
+
 
 //Create a class of Ghost with class name, starting index and speed in the constructor
 class Ghost {
@@ -175,3 +194,4 @@ function moveGhost(ghost) {
     }
   }, ghost.speed);
 }
+
