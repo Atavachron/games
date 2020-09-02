@@ -197,9 +197,24 @@ function moveGhost(ghost) {
       direction = directions[Math.floor(Math.random() * directions.length)];
     }
 
+    //Add the class of scared to the square the ghost is on
     if (ghost.isScared) {
       squares[ghost.currentIndex].classList.add('scared')
     }
+
+
+    //Check if the scared ghost and pacman are on the same square
+    if (ghost.isScared && squares[ghost.currentIndex].classList.contains('pacman')) {
+      //Remove the classnames
+      squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared');
+      //Change the current index to the starting index
+      ghost.currentIndex = ghost.startIndex;
+      //Increase score by 100
+      score += 100;
+      //Add the class names to the new position of ghost
+      squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
+    }
+
 
   }, ghost.speed);
 
