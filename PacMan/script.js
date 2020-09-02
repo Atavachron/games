@@ -215,8 +215,22 @@ function moveGhost(ghost) {
       squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
     }
 
+    checkGameOver();
 
   }, ghost.speed);
 
 }
 
+function checkGameOver() {
+  if (
+    squares[pacmanCurrentIndex].classList.contains('ghost') &&
+    !squares[pacmanCurrentIndex].classList.contains('scared')
+  ) {
+    //Stop ghost from moving
+    ghosts.forEach(ghost => clearInterval(ghost.timerId))
+    //Remove event listener
+    document.removeEventListener('keyup', controlPacman);
+    //Send a message that game is over
+    scoreDisplay.innerText = "You lose!"
+  }
+}
