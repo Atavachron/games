@@ -133,6 +133,10 @@ function eatDot() {
 
 function eatPowerPellet() {
   if (squares[pacmanCurrentIndex].classList.contains('powerup')) {
+    //Remove the class of powerup
+    squares[pacmanCurrentIndex].classList.remove('powerup')
+
+
     //Increase score by 10 pointss
     score += 10;
 
@@ -185,13 +189,19 @@ function moveGhost(ghost) {
       !squares[ghost.currentIndex + direction].classList.contains('ghost')
     ) {
       squares[ghost.currentIndex].classList.remove(ghost.className);
-      squares[ghost.currentIndex].classList.remove('ghost');
+      squares[ghost.currentIndex].classList.remove('ghost', 'scared');
       ghost.currentIndex += direction;
       squares[ghost.currentIndex].classList.add(ghost.className);
       squares[ghost.currentIndex].classList.add('ghost');
     } else {
       direction = directions[Math.floor(Math.random() * directions.length)];
     }
+
+    if (ghost.isScared) {
+      squares[ghost.currentIndex].classList.add('scared')
+    }
+
   }, ghost.speed);
+
 }
 
