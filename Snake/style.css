@@ -1,3 +1,15 @@
-* {
-  box-sizing: border-box;
+body {
+  margin: 10px;
 }
+
+.grid {
+  height: 200px;
+  width: 200px;
+  border: solid 1px black;
+}
+
+.grid div {
+  height: 20px;
+  width: 20px;
+}
+
