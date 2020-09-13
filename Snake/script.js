@@ -2,6 +2,9 @@ const grid = document.querySelector('.grid');
 const start = document.querySelector('#start');
 const score = document.querySelector('#score');
 const squares = [];
+const currentSnake = [2, 1, 0];
+let direction = 1;
+const width = 10;
 
 function createGrid() {
   //create 100 divs 
@@ -17,3 +20,38 @@ function createGrid() {
 }
 
 createGrid();
+
+currentSnake.forEach(index => squares[index].classList.add('snake'));
+
+function move() {
+  //To move the snake first remove the last element from the snake array 
+  const tail = currentSnake.pop();
+  //Remove the styling of the square in the squares array
+  squares[tail].classList.remove('snake');
+  //In the snake array add a new square in the direction chosen
+  currentSnake.unshift(currentSnake[0] + direction);
+  //Add the styling to the corresponding square in the squares array 
+  squares[currentSnake[0]].classList.add('snake');
+
+}
+
+const timerId = setInterval(move, 500);
+
+function control(e) {
+  switch (e.keyCode) {
+    case 37:
+      direction = -1;
+      break;
+    case 38:
+      direction = -width;
+      break;
+    case 39:
+      direction = 1;
+      break;
+    case 40:
+      direction = width;
+      break;
+  }
+}
+
+document.addEventListener('keyup', control)
