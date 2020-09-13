@@ -24,6 +24,22 @@ createGrid();
 currentSnake.forEach(index => squares[index].classList.add('snake'));
 
 function move() {
+  if (
+    //If snake hits the bottom
+    (currentSnake[0] + width >= width * width && direction === width) ||
+    //If snake hits the right side 
+    (currentSnake[0] % width === width - 1 && direction === 1) ||
+    //If snake hits left side 
+    (currentSnake[0] % width === 0 && direction === -1) ||
+    //If snake hits the top
+    (currentSnake[0] - width < 0 && direction === -width) ||
+    //If snake hits itself
+    squares[currentSnake[0] + direction].classList.contains('snake')
+  )
+
+    //Stp running the setInterval
+    return clearInterval(timerId);
+
   //To move the snake first remove the last element from the snake array 
   const tail = currentSnake.pop();
   //Remove the styling of the square in the squares array
