@@ -21,6 +21,7 @@ function createGrid() {
 
 createGrid();
 
+//Add the class of snake to each square in the squares array that has the same index as the square in the current snake array
 currentSnake.forEach(index => squares[index].classList.add('snake'));
 
 function move() {
@@ -51,23 +52,31 @@ function move() {
 
 }
 
+//Make the snake move every half a second
 const timerId = setInterval(move, 500);
 
+
+//Function controlling the snake moves using the arrow keys
 function control(e) {
   switch (e.keyCode) {
+    //Left
     case 37:
       direction = -1;
       break;
+    //Up
     case 38:
       direction = -width;
       break;
+    //Right
     case 39:
       direction = 1;
       break;
+    //Down
     case 40:
       direction = width;
       break;
   }
 }
 
+//Add an event listener to the document that will run the control function when a keyup event is registered
 document.addEventListener('keyup', control)
