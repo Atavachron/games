@@ -1,11 +1,12 @@
 const grid = document.querySelector('.grid');
 const start = document.querySelector('#start');
-const score = document.querySelector('#score');
+const scoreDisplay = document.querySelector('#score');
 const squares = [];
 const currentSnake = [2, 1, 0];
 let direction = 1;
 const width = 10;
 let appleIndex = 0;
+let score = 0;
 
 function createGrid() {
   //create 100 divs 
@@ -48,8 +49,27 @@ function move() {
   squares[tail].classList.remove('snake');
   //In the snake array add a new square in the direction chosen
   currentSnake.unshift(currentSnake[0] + direction);
+
+
+  //When the snake eats an apple:
+  if (squares[currentSnake[0]].classList.contains('apple')) {
+    //Remove the class of apple from the square where the snake head is
+    squares[currentSnake[0]].classList.remove('apple');
+    //Grow the snake by adding class of snake to the tail
+    squares[tail].classList.add('snake');
+    //Increase the snake array
+    currentSnake.push(tail);
+    //Generate a new apple
+    generateApple();
+    //Increase the score
+    score++;
+    //Display the score
+    scoreDisplay.textContent = score;
+  }
+
   //Add the styling to the corresponding square in the squares array 
   squares[currentSnake[0]].classList.add('snake');
+
 
 }
 
@@ -57,7 +77,7 @@ function move() {
 const timerId = setInterval(move, 500);
 
 
-function generateApples() {
+function generateApple() {
   do {
     appleIndex = Math.floor(Math.random() * squares.length);
   } while (squares[appleIndex].classList.contains('snake'));
@@ -65,7 +85,7 @@ function generateApples() {
   squares[appleIndex].classList.add('apple');
 }
 
-generateApples()
+generateApple()
 
 //Function controlling the snake moves using the arrow keys
 function control(e) {
