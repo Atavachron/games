@@ -7,10 +7,12 @@ let direction = 1;
 const width = 10;
 let appleIndex = 0;
 let score = 0;
+let intervalTime = 1000;
+let speed = 0.9;
 
 function createGrid() {
   //create 100 divs 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < width * width; i++) {
     const square = document.createElement('div');
     //Add a class of square to each div
     square.classList.add('square');
@@ -55,6 +57,7 @@ function move() {
   if (squares[currentSnake[0]].classList.contains('apple')) {
     //Remove the class of apple from the square where the snake head is
     squares[currentSnake[0]].classList.remove('apple');
+
     //Grow the snake by adding class of snake to the tail
     squares[tail].classList.add('snake');
     //Increase the snake array
@@ -65,6 +68,10 @@ function move() {
     score++;
     //Display the score
     scoreDisplay.textContent = score;
+    //Speed up the snake
+    clearInterval(timerId)
+    intervalTime = intervalTime * speed;
+    timerId = setInterval(move, intervalTime)
   }
 
   //Add the styling to the corresponding square in the squares array 
@@ -73,8 +80,10 @@ function move() {
 
 }
 
+move();
+
 //Make the snake move every half a second
-const timerId = setInterval(move, 500);
+let timerId = setInterval(move, intervalTime);
 
 
 function generateApple() {
