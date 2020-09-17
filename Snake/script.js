@@ -5,6 +5,7 @@ const squares = [];
 const currentSnake = [2, 1, 0];
 let direction = 1;
 const width = 10;
+let appleIndex = 0;
 
 function createGrid() {
   //create 100 divs 
@@ -55,6 +56,16 @@ function move() {
 //Make the snake move every half a second
 const timerId = setInterval(move, 500);
 
+
+function generateApples() {
+  do {
+    appleIndex = Math.floor(Math.random() * squares.length);
+  } while (squares[appleIndex].classList.contains('snake'));
+
+  squares[appleIndex].classList.add('apple');
+}
+
+generateApples()
 
 //Function controlling the snake moves using the arrow keys
 function control(e) {
