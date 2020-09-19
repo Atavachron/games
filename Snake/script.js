@@ -2,13 +2,14 @@ const grid = document.querySelector('.grid');
 const start = document.querySelector('#start');
 const scoreDisplay = document.querySelector('#score');
 const squares = [];
-const currentSnake = [2, 1, 0];
+let currentSnake = [2, 1, 0];
 let direction = 1;
 const width = 10;
 let appleIndex = 0;
 let score = 0;
 let intervalTime = 1000;
 let speed = 0.9;
+let timerId = 0;
 
 function createGrid() {
   //create 100 divs 
@@ -27,6 +28,33 @@ createGrid();
 
 //Add the class of snake to each square in the squares array that has the same index as the square in the current snake array
 currentSnake.forEach(index => squares[index].classList.add('snake'));
+
+function startGame() {
+  //Remove the snake
+  currentSnake.forEach(index => squares[index].classList.remove('snake'));
+  //Remove the apple
+  squares[appleIndex].classList.remove('apple');
+
+
+  //Reset the variables
+  clearInterval(timerId)
+  currentSnake = [2, 1, 0];
+  score = 0;
+  direction = 1;
+  intervalTime = 1000;
+
+  //Add the new 0 score to the browser
+  scoreDisplay.textContent = score;
+
+  //Generate a new apple
+  generateApple();
+  //Add the class of snake to the respective squares in the squares array
+  currentSnake.forEach(index => squares[index].classList.add('snake'));
+
+  //Make the snake move every second
+  timerId = setInterval(move, intervalTime);
+
+}
 
 function move() {
   if (
@@ -80,10 +108,6 @@ function move() {
 
 }
 
-move();
-
-//Make the snake move every half a second
-let timerId = setInterval(move, intervalTime);
 
 
 function generateApple() {
@@ -120,3 +144,4 @@ function control(e) {
 
 //Add an event listener to the document that will run the control function when a keyup event is registered
 document.addEventListener('keyup', control)
+start.addEventListener('click', startGame)
